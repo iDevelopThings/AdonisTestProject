@@ -1,0 +1,83 @@
+{% extends 'master' %}
+
+{% block content %}
+  
+  <div class="container" ng-controller="TodoController" ng-init="init">
+    <div class="row">
+      <div class="col-md-4">
+        
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Add Todo
+          </div>
+          
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="title">title</label>
+              <input type="text" name="title" id="title" ng-model="newTodo.title" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="description">Description</label>
+              <textarea ng-model="newTodo.description" name="description" id="description" cols="30" rows="4"
+                        class="form-control"></textarea>
+            </div>
+          </div>
+          <div class="panel-footer text-right">
+            <button ng-click="createTodo()" type="submit" class="btn btn-primary">
+              Add Todo
+            </button>
+          </div>
+        </div>
+      
+      </div>
+      <div class="col-md-8">
+        
+        
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Your todos
+          </div>
+          <table class="table table-hover">
+            <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            
+            <tr ng-repeat="todo in todos">
+              <td>{{ todo.id }}</td>
+              <td>{{ todo.title }}</td>
+              <td>{{ todo.description }}</td>
+              <td>{{ todo.created_at }}</td>
+              <td>
+                <ul class="list-inline" style="margin: 0;">
+                  <li>
+                    {{ csrfField }}
+                    <button type="submit" class="btn btn-danger btn-xs">
+                      Delete
+                    </button>
+                  </li>
+                </ul>
+              
+              </td>
+            </tr>
+            
+            
+            </tbody>
+          </table>
+        </div>
+      
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="/app/controllers/TodoController.js"></script>
+{% endblock %}
