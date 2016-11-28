@@ -2,7 +2,7 @@
 
 {% block content %}
   
-  <div class="container" ng-controller="TodoController" ng-init="init">
+  <div class="container" ng-controller="TodoController" ng-init="init()">
     <div class="row">
       <div class="col-md-4">
         
@@ -49,20 +49,13 @@
             </thead>
             <tbody>
             
-            <tr ng-repeat="todo in todos">
-              <td>{{ todo.id }}</td>
-              <td>{{ todo.title }}</td>
-              <td>{{ todo.description }}</td>
-              <td>{{ todo.created_at }}</td>
+            <tr ng-repeat="todo in todosList">
+              <td>{[{ todo.id }]}</td>
+              <td>{[{ todo.title }]}</td>
+              <td>{[{ todo.description }]}</td>
+              <td>{[{ todo.created_at }]}</td>
               <td>
-                <ul class="list-inline" style="margin: 0;">
-                  <li>
-                    {{ csrfField }}
-                    <button type="submit" class="btn btn-danger btn-xs">
-                      Delete
-                    </button>
-                  </li>
-                </ul>
+              
               
               </td>
             </tr>

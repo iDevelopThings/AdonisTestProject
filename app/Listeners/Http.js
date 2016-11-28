@@ -11,7 +11,11 @@ const Http = exports = module.exports = {}
  * @param  {Object} request
  * @param  {Object} response
  */
-Http.handleError = function * (error, request, response) {
+Http.handleError = function *(error, request, response) {
+  if (error.name == 'InvalidLoginException') {
+    yield response.status(404).sendView('404', {});
+  }
+
   /**
    * DEVELOPMENT REPORTER
    */

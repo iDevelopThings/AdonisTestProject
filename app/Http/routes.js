@@ -19,6 +19,16 @@ const Route = use('Route');
 
 Route.on('/').render('welcome');
 
-Route.get('/todo', 'TodoController.view');
-Route.post('/todo/create', 'TodoController.create');
-Route.post('/todo/delete/:id', 'TodoController.delete');
+Route.get('/logout', 'AuthController.logout')
+
+Route.get('/login', 'AuthController.index')
+Route.post('/login', 'AuthController.login')
+
+Route.get('/register', 'RegisterController.index')
+Route.post('register', 'RegisterController.doRegister')
+
+Route.group('auth', () => {
+  Route.get('/todo', 'TodoController.view');
+  Route.post('/todo/create', 'TodoController.create');
+  Route.post('/todo/delete/:id', 'TodoController.delete');
+}).middleware('auth');

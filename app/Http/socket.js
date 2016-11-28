@@ -3,30 +3,30 @@
  */
 'use strict'
 
+const Todo = use('App/Model/Todo');
+const co = use('co');
 
+const server = use('http').createServer()
+const io = use('socket.io')(server)
 
-/*module.exports = function (server) {
+let TodoModel = Todo;
+io.on('connection', function (socket) {
+  console.log(`connection created >>>`)
 
- const io = use('socket.io')(server)
+  socket.on('disconnect', function (socket) {
+    console.log('connection ended <<<')
+  })
+  socket.on('todo.create', function (message) {
+    let todo = co(function*() {
+      return yield TodoModel.create({
+        user_id: message.userId,
+        title: message.title,
+        description: message.description,
+      });
+    }).then(function (response) {
+      socket.emit('todo.complete', {message: 'complete', todo: response});
+    })
 
-
- io.on('connection', function (socket) {
- console.log('connection created >>>')
-
- socket.on('disconnect', function (socket) {
- console.log('connection ended <<<')
- })
- socket.on('my other event', function (message) {
- console.log(message);
- })
- socket.on('todo.create', function (message) {
- console.log(message)
-
- const Todo = use('TestClass');
- yield Todo.create();
-
- socket.emit('todo.complete', {message: 'complete'})
- })
- })
-
- }*/
+  })
+})
+io.listen(3000)

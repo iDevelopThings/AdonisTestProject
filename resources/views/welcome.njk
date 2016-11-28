@@ -1,15 +1,17 @@
 {% extends 'master' %}
 
 {% block content %}
-  <div class="__banner">
-    <div class="banner__inner">
-      <ul>
-        <li>
-          <a href="/todo">
-            Todo
-          </a>
-        </li>
-      </ul>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        
+        {% if not currentUser %}
+          <a href="/login" class="btn btn-info"> You need to login </a>
+        {% endif %}
+      
+      </div>
     </div>
   </div>
+
+
 {% endblock %}

@@ -4,26 +4,42 @@
 
 MyApp.controller('TodoController', function ($scope, $http) {
   "use strict";
+
+
   $scope.newTodo = {
+    userId: user.id,
     title: "",
     description: ""
   };
-  $scope.todos = [];
+  $scope.todosList = [];
 
-  var socket = io('http://localhost:3000');
+  $scope.$watch('todosList', function (newVal, oldVal) {
+    $scope.todosList = newVal;
+  }, false);
 
-  socket.on('todo.complete', function (message) {
-    $scope.todos.push(message.todo);
-    console.log(message);
-  });
 
   $scope.init = function () {
+    socket.on('todo.complete', function (message) {
+      $scope.todosList.push(message.todo);
+      $scope.$apply();
+    });
 
-    socket.emit('my other event', 'hi');
   }
 
   $scope.createTodo = function () {
-    socket.emit('todo.create', $scope.newTodo);
+    socket.emit(`todo.create`, $scope.newTodo);
+    /*$http({
+     method: 'POST',
+     url: '/todo/create',
+     data: $scope.newTodo
+     }).then(
+     function (response) {
+     console.log(response);
+     },
+     function (response) {
+     console.log(response);
+     }
+     )*/
   }
 
 });

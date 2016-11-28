@@ -20,7 +20,54 @@
   <![endif]-->
 </head>
 <body ng-app="MyApp">
-
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      
+      <!-- Collapsed Hamburger -->
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+        <span class="sr-only">Toggle Navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <!-- Branding Image -->
+      <a class="navbar-brand" href="/">
+        TODO App
+      </a>
+    </div>
+    
+    <div class="collapse navbar-collapse" id="app-navbar-collapse">
+      <!-- Left Side Of Navbar -->
+      <ul class="nav navbar-nav">
+        <li><a href="/home">Home</a></li>
+      </ul>
+      
+      <!-- Right Side Of Navbar -->
+      <ul class="nav navbar-nav navbar-right">
+        <!-- Authentication Links -->
+        
+        {% if not currentUser %}
+          <li><a href="/login">Login</a></li>
+          <li><a href="/register">Register</a></li>
+        {% else %}
+          <li><a href="/todo">Todo</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+              {{ currentUser.username }} <span class="caret"></span>
+            </a>
+            
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/logout"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+            </ul>
+          </li>
+        {% endif %}
+      
+      </ul>
+    </div>
+  </div>
+</nav>
 
 {% block content %}{% endblock %}
 
@@ -32,6 +79,9 @@
         crossorigin="anonymous"></script>
 <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular.min.js"></script>
+<script>
+  window.user = {% if currentUser %} {{ {id:currentUser.id, username:currentUser.username, email:currentUser.email} | dump | safe }} {% else %} null {% endif %};
+</script>
 <script src="/app/app.js"></script>
 {% block scripts %}{% endblock %}
 </body>

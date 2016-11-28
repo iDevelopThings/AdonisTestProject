@@ -5,8 +5,9 @@ const Schema = use('Schema')
 class TodosTableSchema extends Schema {
 
   up() {
-    TestClass.create('todos', (table) => {
+    this.create('todos', (table) => {
       table.increments();
+      table.integer('user_id');
       table.text('title');
       table.text('description', 'longtext');
       table.timestamps();
