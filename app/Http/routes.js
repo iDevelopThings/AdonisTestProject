@@ -30,5 +30,6 @@ Route.post('register', 'RegisterController.doRegister')
 Route.group('auth', () => {
   Route.get('/todo', 'TodoController.view');
   Route.post('/todo/create', 'TodoController.create');
+  Route.get('/todo/get', 'TodoController.get');
   Route.post('/todo/delete/:id', 'TodoController.delete');
 }).middleware('auth');

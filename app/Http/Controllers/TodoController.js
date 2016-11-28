@@ -24,13 +24,18 @@ class TodoController {
     yield response.redirect('back');
   }
 
-  *
-  delete(request, response) {
+  * delete(request, response) {
     const id = request.param('id');
     const post = yield Todo.findBy('id', id);
     yield post.delete();
 
     yield response.redirect('back');
+  }
+
+  * get(request, response) {
+    const todos = yield Todo.query().where('user_id', request.currentUser.id).fetch()
+
+    yield response.json(todos);
   }
 
 }
